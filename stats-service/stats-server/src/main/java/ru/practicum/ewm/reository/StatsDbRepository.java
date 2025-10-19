@@ -17,7 +17,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class StatsDbRepository implements StatsRepository{
+public class StatsDbRepository implements StatsRepository {
     private final JdbcTemplate jdbc;
     private final NamedParameterJdbcTemplate namedJdbc;
     private final StatsResponseDtoRowMapper dtoRowMapper;
