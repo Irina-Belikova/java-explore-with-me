@@ -12,7 +12,6 @@ import ru.practicum.ewm.mapper.StatsResponseDtoRowMapper;
 import ru.practicum.ewm.model.Stats;
 
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -27,7 +26,7 @@ public class StatsDbRepository implements StatsRepository {
             CASE WHEN :unique = true THEN COUNT(DISTINCT ip) ELSE COUNT(*) END as hits
             FROM stats
             WHERE times BETWEEN :start AND :end
-            AND (:uris IS NULL OR uri IN (:uris))
+            AND (COALESCE(:uris, NULL) IS NULL OR uri IN (:uris))
             GROUP  BY app, uri
             ORDER BY hits DESC
             """;
@@ -36,7 +35,7 @@ public class StatsDbRepository implements StatsRepository {
     public Stats addHit(Stats hit) {
         GeneratedKeyHolder key = new GeneratedKeyHolder();
         jdbc.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(INSERT_HIT, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(INSERT_HIT, new String[]{"id"});
             ps.setString(1, hit.getApp());
             ps.setString(2, hit.getUri());
             ps.setString(3, hit.getIp());
