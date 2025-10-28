@@ -12,6 +12,6 @@ import java.util.List;
 public class ParamDto {
     private LocalDateTime start;
     private LocalDateTime end;
-    List<String> uris = new ArrayList<>();
-    boolean unique;
+    private List<String> uris = new ArrayList<>();
+    private boolean unique;
 }
