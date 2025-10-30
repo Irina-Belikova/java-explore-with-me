@@ -31,7 +31,7 @@ public class PublicCompilationController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public List<CompilationDto> getCompilations(@RequestParam(defaultValue = "true") boolean pinned,
+    public List<CompilationDto> getCompilations(@RequestParam(required = false) Boolean pinned,
                                                 @RequestParam(defaultValue = "0")
                                                 @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,
                                                 @RequestParam(defaultValue = "10")
