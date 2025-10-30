@@ -1,8 +1,6 @@
 package ru.practicum.ewm.event.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +29,8 @@ public class NewEventDto {
     private Location location;
 
     private boolean paid = false;
+
+    @Min(value = 0, message = "Количество участников не может быть меньше нуля.")
     private int participantLimit = 0;
     private boolean requestModeration = true;
 

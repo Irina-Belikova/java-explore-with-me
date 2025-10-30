@@ -13,7 +13,7 @@ public class GetEventsRequest {
     private StatusState state;
     private String text;
     private List<Long> categories;
-    private boolean paid;
+    private Boolean paid;
     private LocalDateTime rangeStart;
     private LocalDateTime rangeEnd;
     private boolean onlyAvailable;

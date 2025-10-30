@@ -9,6 +9,7 @@ import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.user.dto.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.user.dto.EventRequestStatusUpdateResult;
 import ru.practicum.ewm.user.dto.ParticipationRequestDto;
+import ru.practicum.ewm.user.dto.UpdateRequestStaus;
 import ru.practicum.ewm.user.mapper.RequestMapper;
 import ru.practicum.ewm.user.model.Request;
 import ru.practicum.ewm.user.model.RequestStatus;
@@ -41,7 +42,7 @@ public class RequestServiceImpl implements RequestService {
         request.setRequester(requester);
         request.setCreated(LocalDateTime.now());
 
-        if (!event.isRequestModeration()) {
+        if (!event.isRequestModeration() || event.getParticipantLimit() == 0) {
             request.setStatus(RequestStatus.CONFIRMED);
         } else {
             request.setStatus(RequestStatus.PENDING);
@@ -78,26 +79,33 @@ public class RequestServiceImpl implements RequestService {
         List<Request> requests = requestRepository.findByIdIn(dto.getRequestIds());
         List<Request> confirmedRequests = new ArrayList<>();
         List<Request> rejectedRequests = new ArrayList<>();
-        long participantLimit = eventRepository.getParticipantLimit(eventId);
 
-        if (participantLimit == 0) {
-            requests.forEach(request -> {
-                request.setStatus(RequestStatus.CONFIRMED);
-                confirmedRequests.add(request);
-            });
+        if (dto.getStatus().equals(UpdateRequestStaus.REJECTED)) {
+            requests.forEach(request -> request.setStatus(RequestStatus.REJECTED));
+            rejectedRequests.addAll(requests);
         } else {
-            int confirmedCount = requestRepository.getCountRequestsByEventId(eventId);
-            for (Request request : requests) {
-                if (confirmedCount == participantLimit) {
-                    request.setStatus(RequestStatus.CANCELED);
-                    rejectedRequests.add(request);
-                } else {
+            long participantLimit = eventRepository.getParticipantLimit(eventId);
+
+            if (participantLimit == 0) {
+                requests.forEach(request -> {
                     request.setStatus(RequestStatus.CONFIRMED);
                     confirmedRequests.add(request);
-                    confirmedCount = confirmedCount + 1;
+                });
+            } else {
+                int confirmedCount = requestRepository.getCountRequestsByEventId(eventId);
+                for (Request request : requests) {
+                    if (confirmedCount == participantLimit) {
+                        request.setStatus(RequestStatus.REJECTED);
+                        rejectedRequests.add(request);
+                    } else {
+                        request.setStatus(RequestStatus.CONFIRMED);
+                        confirmedRequests.add(request);
+                        confirmedCount = confirmedCount + 1;
+                    }
                 }
             }
         }
+
         List<ParticipationRequestDto> confirmedDto = mapper.mapToRequestDtoList(confirmedRequests);
         List<ParticipationRequestDto> rejectedDto = mapper.mapToRequestDtoList(rejectedRequests);
         return EventRequestStatusUpdateResult.builder()

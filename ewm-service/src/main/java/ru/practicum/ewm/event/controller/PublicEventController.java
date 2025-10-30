@@ -42,19 +42,20 @@ public class PublicEventController {
     @ResponseStatus(code = HttpStatus.OK)
     public List<EventShortDto> getEventsByParam(@RequestParam(required = false) String text,
                                                 @RequestParam(required = false) List<Long> categories,
-                                                @RequestParam(required = false) boolean paid,
+                                                @RequestParam(required = false) Boolean paid,
                                                 @RequestParam(required = false)
                                                 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
                                                 @RequestParam(required = false)
                                                 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
                                                 @RequestParam(defaultValue = "false") boolean onlyAvailable,
-                                                @RequestParam(required = false, defaultValue = "EVENT_DATE") String sort,
-                                                @RequestParam(required = false, defaultValue = "0")
+                                                @RequestParam(defaultValue = "EVENT_DATE") String sort,
+                                                @RequestParam(defaultValue = "0")
                                                 @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,
-                                                @RequestParam(required = false, defaultValue = "10")
+                                                @RequestParam(defaultValue = "10")
                                                 @Min(value = 1, message = "Параметр 'size' должен быть не меньше 1") int size,
                                                 HttpServletRequest request) {
         log.info("Публичный запрос на получение списка событий.");
+        validation.validationGetEventsByParam(rangeStart, rangeEnd);
         GetEventsRequest param = GetEventsRequest.builder()
                 .state(StatusState.PUBLISHED)
                 .text(text)

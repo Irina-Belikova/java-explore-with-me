@@ -37,10 +37,6 @@ public class StatsController {
             @RequestParam(defaultValue = "false") boolean unique
     ) {
         log.info("Поступил запрос на получение статистики.");
-        try {
             return ResponseEntity.ok(service.getStats(start, end, uris, unique));
-        } catch (Exception e) {
-            throw new StatsServerException("Ошибка получения данных от сервера статистики.");
-        }
     }
 }

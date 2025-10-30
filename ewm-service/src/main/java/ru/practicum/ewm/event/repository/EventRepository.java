@@ -6,10 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.practicum.ewm.event.model.Event;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public interface EventRepository extends JpaRepository<Event, Long>, EventRepositoryCustom {
 
@@ -41,6 +38,10 @@ public interface EventRepository extends JpaRepository<Event, Long>, EventReposi
                 list.add(event);
                 eventMaps.put(id, list);
             }
+        }
+
+        for (Long compId : compIds) {
+            eventMaps.putIfAbsent(compId, Collections.emptyList());
         }
         return eventMaps;
     }

@@ -2,6 +2,8 @@ package ru.practicum.ewm.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.practicum.ewm.category.dto.CategoryDto;
+import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.repository.CategoryRepository;
 import ru.practicum.ewm.compilation.repository.CompilationRepository;
 import ru.practicum.ewm.event.dto.NewEventDto;
@@ -11,6 +13,7 @@ import ru.practicum.ewm.event.dto.AdminStateAction;
 import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.event.model.StatusState;
 import ru.practicum.ewm.event.repository.EventRepository;
+import ru.practicum.ewm.exception.BadParameterException;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.ValidationException;
 import ru.practicum.ewm.user.dto.EventRequestStatusUpdateRequest;
@@ -50,6 +53,14 @@ public class ValidationUtil {
         }
     }
 
+    public void validationForUpdateCategory(long catId, CategoryDto dto) {
+        Category category = categoryRepository.findById(catId)
+                .orElseThrow(() -> new NotFoundException(String.format("Категории с таким id - %d не существует.", catId)));
+        if (categoryRepository.existsByNameIgnoreCase(dto.getName()) && !dto.getName().equals(category.getName())) {
+            throw new ValidationException(String.format("Категория с таким названием - %s уже существует.", dto.getName()));
+        }
+    }
+
     public void checkCategoryId(long catId) {
         if (!categoryRepository.existsById(catId)) {
             throw new NotFoundException(String.format("Категории с таким id - %d не существует.", catId));
@@ -60,7 +71,7 @@ public class ValidationUtil {
         checkCategoryId(dto.getCategory());
         LocalDateTime date = DateFormatterUtil.parseStringToDate(dto.getEventDate());
         if (date.isBefore(LocalDateTime.now().plusHours(2))) {
-            throw new ValidationException(String.format("Дата события должна быть не ранее %s",
+            throw new BadParameterException(String.format("Дата события должна быть не ранее %s",
                     DateFormatterUtil.formatDateToString(LocalDateTime.now().plusHours(2))));
         }
     }
@@ -101,7 +112,7 @@ public class ValidationUtil {
             LocalDateTime date = DateFormatterUtil.parseStringToDate(dto.getEventDate());
 
             if (date.isBefore(LocalDateTime.now().plusHours(2))) {
-                throw new ValidationException(String.format("Изменяемая дата события должна быть не ранее %s",
+                throw new BadParameterException(String.format("Изменяемая дата события должна быть не ранее %s",
                         DateFormatterUtil.formatDateToString(LocalDateTime.now().plusHours(2))));
             }
         }
@@ -119,18 +130,20 @@ public class ValidationUtil {
            LocalDateTime newEventDate = DateFormatterUtil.parseStringToDate(dto.getEventDate());
 
            if (newEventDate.isBefore(LocalDateTime.now().plusHours(1))) {
-               throw new ValidationException(String.format("Изменяемая дата события должна быть не ранее %s",
+               throw new BadParameterException(String.format("Изменяемая дата события должна быть не ранее %s",
                        DateFormatterUtil.formatDateToString(LocalDateTime.now().plusHours(1))));
            }
        }
 
-        if (dto.getStateAction().equals(AdminStateAction.PUBLISH_EVENT) && !event.getState().equals(StatusState.PENDING)) {
-                throw new ValidationException("Опубликовать можно только событие в статусе ожидания публикации.");
-        }
+       if (dto.getStateAction() != null) {
+           if (dto.getStateAction().equals(AdminStateAction.PUBLISH_EVENT) && !event.getState().equals(StatusState.PENDING)) {
+               throw new ValidationException("Опубликовать можно только событие в статусе ожидания публикации.");
+           }
 
-        if (dto.getStateAction().equals(AdminStateAction.REJECT_EVENT) && event.getState().equals(StatusState.PUBLISHED)) {
-            throw new ValidationException("Нельзя отклонить опубликованное событие.");
-        }
+           if (dto.getStateAction().equals(AdminStateAction.REJECT_EVENT) && event.getState().equals(StatusState.PUBLISHED)) {
+               throw new ValidationException("Нельзя отклонить опубликованное событие.");
+           }
+       }
 
         if (dto.getCategory() != null) {
             checkCategoryId(dto.getCategory());
@@ -182,7 +195,7 @@ public class ValidationUtil {
         }
 
         List<RequestStatus> statuses = requestRepository.getRequestStatusListForUpdate(dto.getRequestIds());
-        if (statuses.contains(RequestStatus.CONFIRMED) || statuses.contains(RequestStatus.CANCELED)) {
+        if (statuses.contains(RequestStatus.CONFIRMED) || statuses.contains(RequestStatus.REJECTED) || statuses.contains(RequestStatus.CANCELED)) {
             throw new ValidationException("В списке заявок должны быть заявки только со статусом ожидания.");
         }
     }
@@ -205,6 +218,14 @@ public class ValidationUtil {
 
         if (!event.getState().equals(StatusState.PUBLISHED)) {
             throw new NotFoundException("Данное событие не опубликовано.");
+        }
+    }
+
+    public void validationGetEventsByParam(LocalDateTime rangeStart, LocalDateTime rangeEnd) {
+        if (rangeStart != null && rangeEnd != null) {
+            if (rangeEnd.isBefore(rangeStart)) {
+                throw new BadParameterException("Дата окончания выборки должна быть после даты начала.");
+            }
         }
     }
 }

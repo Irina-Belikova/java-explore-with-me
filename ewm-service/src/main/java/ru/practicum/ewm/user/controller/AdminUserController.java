@@ -42,9 +42,9 @@ public class AdminUserController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers(@RequestParam(required = false) List<Long> ids,
-                                  @RequestParam(required = false, defaultValue = "0")
+                                  @RequestParam(defaultValue = "0")
                                   @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,
-                                  @RequestParam(required = false, defaultValue = "10")
+                                  @RequestParam(defaultValue = "10")
                                   @Min(value = 1, message = "Параметр 'size' должен быть не меньше 1") int size) {
         log.info("Поступил запрос на получение списка пользователей - {} с отступом - {} и количеством элементов - {}",
                 ids, from, size);

@@ -31,10 +31,10 @@ public class PublicCompilationController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public List<CompilationDto> getCompilations(@RequestParam boolean pinned,
-                                                @RequestParam(required = false, defaultValue = "0")
+    public List<CompilationDto> getCompilations(@RequestParam(defaultValue = "true") boolean pinned,
+                                                @RequestParam(defaultValue = "0")
                                                 @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,
-                                                @RequestParam(required = false, defaultValue = "10")
+                                                @RequestParam(defaultValue = "10")
                                                 @Min(value = 1, message = "Параметр 'size' должен быть не меньше 1") int size) {
         log.info("Запрос на подборку событий с pinned - {}, from - {}, size - {}", pinned, from, size);
         return compilationService.getCompilations(pinned, from, size);

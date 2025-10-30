@@ -25,14 +25,19 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     List<Request> findByIdIn(List<Long> requestIds);
 
-    @Query("SELECT r.event.id, COUNT(*) FROM Request r WHERE r.event.id IN :eventIds AND r.status = RequestStatus.CONFIRMED")
+    @Query("SELECT r.event.id, COUNT(r) FROM Request r " +
+           "WHERE r.event.id IN :eventIds AND r.status = RequestStatus.CONFIRMED GROUP BY r.event.id")
     List<Object[]> getConfirmedRequests(List<Long> eventIds);
 
     default Map<Long, Integer> getMapOfCountRequests(List<Long> eventIds) {
         List<Object[]> objects = getConfirmedRequests(eventIds);
         Map<Long, Integer> confirmedMaps = new HashMap<>();
+
+        for (Long id : eventIds) {
+            confirmedMaps.put(id, 0);
+        }
         for (Object[] object : objects) {
-            confirmedMaps.put((Long) object[0], (Integer) object[1]);
+            confirmedMaps.put((Long) object[0], ((Number) object[1]).intValue());
         }
         return confirmedMaps;
     }

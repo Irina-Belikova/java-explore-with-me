@@ -54,7 +54,7 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
     }
 
     @Override
-    public List<Event> getEventsForPublic(StatusState state, String text, List<Long> categories, boolean paid,
+    public List<Event> getEventsForPublic(StatusState state, String text, List<Long> categories, Boolean paid,
                                           LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size) {
         JPAQuery<Event> query = queryFactory
                 .selectFrom(event)
@@ -73,7 +73,9 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
             query.where(event.category.id.in(categories));
         }
 
-        query.where(event.paid.eq(paid));
+        if (paid != null) {
+            query.where(event.paid.eq(paid));
+        }
 
         LocalDateTime actualRangeStart = rangeStart != null ? rangeStart : LocalDateTime.now();
         query.where(event.eventDate.goe(actualRangeStart));

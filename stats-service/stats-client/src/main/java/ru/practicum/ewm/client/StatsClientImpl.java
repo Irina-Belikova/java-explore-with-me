@@ -26,7 +26,7 @@ public class StatsClientImpl implements StatsClient {
     private final String application;
     private static final String HIT_ENDPOINT = "/hit";
     private static final String STATS_ENDPOINT = "/stats";
-    public static final DateTimeFormatter FORNATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public StatsClientImpl(@Value("${stats.server.url}") String serverUrl,
                            @Value("${spring.application.name}") String application,
@@ -42,7 +42,7 @@ public class StatsClientImpl implements StatsClient {
                 .app(application)
                 .ip(request.getRemoteAddr())
                 .uri(request.getRequestURI())
-                .timestamp(LocalDateTime.now().format(FORNATTER))
+                .timestamp(LocalDateTime.now().format(FORMATTER))
                 .build();
 
         try {

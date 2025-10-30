@@ -59,7 +59,7 @@ public class CompilationServiceImpl implements CompilationService {
         mapper.updateCompilation(dto, compilation);
         List<Event> events = eventRepository.findByCompilationId(compId);
 
-        if (dto.getEvents().isEmpty()) {
+        if (dto.getEvents() == null || dto.getEvents().isEmpty()) {
             return mapper.mapToCompilationDto(compilation, events);
         }
 
@@ -83,6 +83,7 @@ public class CompilationServiceImpl implements CompilationService {
         List<Compilation> compilations = compilationRepository.findByPinned(pinned, page).getContent();
         List<Long> compIds = compilations.stream().map(Compilation::getId).toList();
         Map<Long, List<Event>> events = eventRepository.getMapOfEventsByCompId(compIds);
+
         return compilations.stream()
                 .map(compilation -> mapper.mapToCompilationDto(
                         compilation,

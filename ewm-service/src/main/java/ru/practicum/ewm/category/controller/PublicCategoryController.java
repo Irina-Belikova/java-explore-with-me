@@ -24,9 +24,9 @@ public class PublicCategoryController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public List<CategoryDto> getAllCategories(@RequestParam(required = false, defaultValue = "0")
+    public List<CategoryDto> getAllCategories(@RequestParam(defaultValue = "0")
                                               @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,
-                                              @RequestParam(required = false, defaultValue = "10")
+                                              @RequestParam(defaultValue = "10")
                                               @Min(value = 1, message = "Параметр 'size' должен быть не меньше 1") int size) {
         log.info("Поступил запрос на получения списка категорий с параметрами from - {} и size - {}.", from, size);
         return categoryService.getAllCategories(from, size);

@@ -23,6 +23,7 @@ import ru.practicum.ewm.user.repository.UserRepository;
 import ru.practicum.ewm.utils.DateFormatterUtil;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -84,8 +85,14 @@ public class EventServiceImpl implements EventService {
                 .orElseThrow(() -> new NotFoundException(String.format("События с таким id - %d не существует.", eventId)));
         mapper.updateEventFromDto(dto, updateEvent);
 
-        if (dto.getStateAction().equals(InitiatorStateAction.CANCEL_REVIEW)) {
-            updateEvent.setState(StatusState.CANCELED);
+        if (dto.getStateAction() != null) {
+            if (dto.getStateAction().equals(InitiatorStateAction.CANCEL_REVIEW)) {
+                updateEvent.setState(StatusState.CANCELED);
+            }
+
+            if (dto.getStateAction().equals(InitiatorStateAction.SEND_TO_REVIEW)) {
+                updateEvent.setState(StatusState.PENDING);
+            }
         }
 
         if (dto.getCategory() != null) {
@@ -109,13 +116,15 @@ public class EventServiceImpl implements EventService {
             updateEvent.setCategory(newCategory);
         }
 
-        if (dto.getStateAction().equals(AdminStateAction.PUBLISH_EVENT)) {
-            updateEvent.setState(StatusState.PUBLISHED);
-            updateEvent.setPublishedOn(LocalDateTime.now());
-        }
+        if (dto.getStateAction() != null) {
+            if (dto.getStateAction().equals(AdminStateAction.PUBLISH_EVENT)) {
+                updateEvent.setState(StatusState.PUBLISHED);
+                updateEvent.setPublishedOn(LocalDateTime.now());
+            }
 
-        if (dto.getStateAction().equals(AdminStateAction.REJECT_EVENT)) {
-            updateEvent.setState(StatusState.CANCELED);
+            if (dto.getStateAction().equals(AdminStateAction.REJECT_EVENT)) {
+                updateEvent.setState(StatusState.CANCELED);
+            }
         }
         return mapper.mapToEventFullDto(updateEvent);
     }
@@ -156,7 +165,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventShortDto> getEventsByParam(GetEventsRequest param) {
         List<Event> events = eventRepository.getEventsForPublic(param.getState(), param.getText(),
-                param.getCategories(), param.isPaid(), param.getRangeStart(), param.getRangeEnd(),
+                param.getCategories(), param.getPaid(), param.getRangeStart(), param.getRangeEnd(),
                 param.getFrom(), param.getSize());
 
         if (param.isOnlyAvailable()) {
@@ -182,10 +191,15 @@ public class EventServiceImpl implements EventService {
         return eventsDto;
     }
 
+    private boolean isEventAvailable(Event event) {
+        long confirmedRequest = requestRepository.getCountRequestsByEventId(event.getId());
+        return event.getParticipantLimit() == 0 || confirmedRequest < event.getParticipantLimit();
+    }
+
     private EventFullDto addConfirmedRequestAndViewsToEventFullDto(Event event) {
         int confirmedRequest = requestRepository.getCountRequestsByEventId(event.getId());
 
-        List<String> uris = List.of("/event/" + event.getId());
+        List<String> uris = List.of("/events/" + event.getId());
 
         LocalDateTime start = event.getCreatedOn();
         LocalDateTime end = LocalDateTime.now();
@@ -195,19 +209,16 @@ public class EventServiceImpl implements EventService {
 
         EventFullDto dto = mapper.mapToEventFullDto(event);
         dto.setConfirmedRequests(confirmedRequest);
-        dto.setViews(stats.getFirst().getHits());
+        if (!stats.isEmpty()) {
+            dto.setViews(stats.getFirst().getHits());
+        }
         return dto;
-    }
-
-    private boolean isEventAvailable(Event event) {
-        long confirmedRequest = requestRepository.getCountRequestsByEventId(event.getId());
-        return event.getParticipantLimit() == 0 || confirmedRequest < event.getParticipantLimit();
     }
 
     private Map<Long, Long> getViewsForEvents(List<Long> eventIds, List<LocalDateTime> createdOns) {
         if (eventIds.isEmpty()) return Map.of();
         List<String> uris = eventIds.stream()
-                .map(id -> "/events" + id).toList();
+                .map(id -> "/events/" + id).toList();
 
         LocalDateTime start = createdOns.stream()
                 .min(LocalDateTime::compareTo).orElse(LocalDateTime.now());
@@ -216,10 +227,15 @@ public class EventServiceImpl implements EventService {
         List<StatsResponseDto> stats = statsClient.getStats(DateFormatterUtil.formatDateToString(start),
                 DateFormatterUtil.formatDateToString(end), uris, true);
 
-        return stats.stream()
-                .collect(Collectors.toMap(
-                        stat -> Long.parseLong(stat.getUri().split("/")[2]),
-                        stat -> stat.getHits()
-                ));
+        Map<Long, Long> views = new HashMap<>();
+
+        for (Long id : eventIds) {
+            views.put(id, 0L);
+        }
+
+        for (StatsResponseDto stat : stats) {
+            views.put(Long.parseLong(stat.getUri().split("/")[2]), stat.getHits());
+        }
+        return views;
     }
 }

@@ -10,6 +10,6 @@ public interface EventRepositoryCustom {
     List<Event> findEventsByParams(List<Long> users, List<StatusState> states, List<Long> categories,
                                    LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size);
 
-    List<Event> getEventsForPublic(StatusState state, String text, List<Long> categories, boolean paid,
+    List<Event> getEventsForPublic(StatusState state, String text, List<Long> categories, Boolean paid,
                                    LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size);
 }

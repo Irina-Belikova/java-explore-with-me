@@ -15,9 +15,11 @@ public interface RequestMapper {
 
     @Mapping(target = "event", source = "event.id")
     @Mapping(target = "requester", source = "requester.id")
+    @Mapping(target = "created", source = "created", qualifiedByName = "formatDateToString")
     ParticipationRequestDto mapToRequestDto(Request request);
 
     @Mapping(target = "event", source = "event.id")
     @Mapping(target = "requester", source = "requester.id")
+    @Mapping(target = "created", source = "created", qualifiedByName = "formatDateToString")
     List<ParticipationRequestDto> mapToRequestDtoList(List<Request> requests);
 }

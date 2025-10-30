@@ -48,4 +48,11 @@ public class ErrorHandler {
         return new ApiError(HttpStatus.NOT_FOUND.name(), "Данные не найдены.",
                 e.getMessage(), DateFormatterUtil.formatDateToString(LocalDateTime.now()));
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleBadParameterException(BadParameterException e) {
+        return new ApiError(HttpStatus.BAD_REQUEST.name(), "Запрос составлен некорректно.",
+                e.getMessage(), DateFormatterUtil.formatDateToString(LocalDateTime.now()));
+    }
 }

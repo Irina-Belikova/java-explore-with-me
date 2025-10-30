@@ -1,5 +1,6 @@
 package ru.practicum.ewm.event.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,8 @@ public class UpdateEventUserRequest {
     private String eventDate;
     private Location location;
     private Boolean paid;
+
+    @Min(value = 0, message = "Количество участников не может быть меньше нуля.")
     private Integer participantLimit;
     private Boolean requestModeration;
     private Long category;

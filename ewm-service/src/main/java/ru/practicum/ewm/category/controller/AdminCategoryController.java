@@ -32,7 +32,7 @@ public class AdminCategoryController {
     @ResponseStatus(code = HttpStatus.OK)
     public CategoryDto updateCategory(@PathVariable Long catId, @Valid @RequestBody CategoryDto dto) {
         log.info("Поступи запрос на обновление названия категории с id - {} на - {}", catId, dto.getName());
-        validation.checkCategoryName(dto.getName());
+        validation.validationForUpdateCategory(catId, dto);
         return categoryService.updateCategory(catId, dto);
     }
 

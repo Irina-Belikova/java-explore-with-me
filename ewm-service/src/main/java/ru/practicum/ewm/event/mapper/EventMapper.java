@@ -51,6 +51,7 @@ public interface EventMapper {
     @Mapping(target = "state", ignore = true)
     @Mapping(target = "initiator", ignore = true)
     @Mapping(target = "compilationId", ignore = true)
+    @Mapping(target = "eventDate", source = "eventDate", qualifiedByName = "parseStringToDate")
     void updateEventFromDto(UpdateEventUserRequest dto, @MappingTarget Event event);
 
     @Mapping(target = "id", ignore = true)
@@ -60,6 +61,7 @@ public interface EventMapper {
     @Mapping(target = "state", ignore = true)
     @Mapping(target = "initiator", ignore = true)
     @Mapping(target = "compilationId", ignore = true)
+    @Mapping(target = "eventDate", source = "eventDate", qualifiedByName = "parseStringToDate")
     void updateEventFromAdminDto(UpdateEventAdminRequest dto, @MappingTarget Event event);
 
     @Mapping(target = "confirmedRequests", ignore = true)
