@@ -52,6 +52,8 @@ public class CategoryServiceImpl implements CategoryService {
         return mapper.mapToCategoryDto(category);
     }
 
+    //Удаляются только категории без связи с ивентами. Если есть связь, то нужно выбрасывать исключение по
+    //заданию. Валидаия на этот случай у меня в контроллере.
     @Override
     @Transactional
     public void deleteCategoryById(long id) {

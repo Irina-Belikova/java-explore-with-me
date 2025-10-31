@@ -5,6 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.pattern.PathPattern;
+import org.springframework.web.util.pattern.PathPatternParser;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.repository.CategoryRepository;
 import ru.practicum.ewm.client.StatsClient;
@@ -21,6 +23,8 @@ import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.RequestRepository;
 import ru.practicum.ewm.user.repository.UserRepository;
 import ru.practicum.ewm.utils.DateFormatterUtil;
+import org.springframework.http.server.PathContainer;
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -233,8 +237,16 @@ public class EventServiceImpl implements EventService {
             views.put(id, 0L);
         }
 
+        PathPattern pattern = PathPatternParser.defaultInstance.parse("/events/{id}");
+
         for (StatsResponseDto stat : stats) {
-            views.put(Long.parseLong(stat.getUri().split("/")[2]), stat.getHits());
+            String uri = stat.getUri();
+            PathContainer pathContainer = PathContainer.parsePath(uri);
+            PathPattern.PathMatchInfo matchInfo = pattern.matchAndExtract(pathContainer);
+
+            if (matchInfo != null) {
+                views.put(Long.parseLong(matchInfo.getUriVariables().get("id")), stat.getHits());
+            }
         }
         return views;
     }

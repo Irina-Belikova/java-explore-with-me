@@ -38,7 +38,6 @@ public class AdminCompilationController {
     }
 
     @PatchMapping("/{compId}")
-    @ResponseStatus(code = HttpStatus.OK)
     public CompilationDto updateCompilation(@PathVariable Long compId, @Valid @RequestBody UpdateCompilationRequest dto) {
         log.info("Запрос на изменение подборки - {} с dto: {}", compId, dto);
         validation.checkCompilationId(compId);

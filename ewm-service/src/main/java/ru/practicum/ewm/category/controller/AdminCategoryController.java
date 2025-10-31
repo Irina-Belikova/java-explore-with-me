@@ -29,7 +29,6 @@ public class AdminCategoryController {
     }
 
     @PatchMapping("/{catId}")
-    @ResponseStatus(code = HttpStatus.OK)
     public CategoryDto updateCategory(@PathVariable Long catId, @Valid @RequestBody CategoryDto dto) {
         log.info("Поступи запрос на обновление названия категории с id - {} на - {}", catId, dto.getName());
         validation.validationForUpdateCategory(catId, dto);

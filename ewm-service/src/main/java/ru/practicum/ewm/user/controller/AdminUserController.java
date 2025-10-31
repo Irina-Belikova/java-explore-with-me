@@ -40,7 +40,6 @@ public class AdminUserController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers(@RequestParam(required = false) List<Long> ids,
                                   @RequestParam(defaultValue = "0")
                                   @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,

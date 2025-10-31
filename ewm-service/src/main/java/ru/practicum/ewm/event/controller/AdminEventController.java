@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.event.dto.EventFullDto;
@@ -27,7 +26,6 @@ public class AdminEventController {
     private final ValidationUtil validation;
 
     @PatchMapping("/{eventId}")
-    @ResponseStatus(code = HttpStatus.OK)
     public EventFullDto updateEventByAdmin(@PathVariable Long eventId, @Valid @RequestBody UpdateEventAdminRequest dto) {
         log.info("Запрос от администратора на изменение события - {}, {}", eventId, dto);
         validation.validationUpdateEventByAdmin(eventId, dto);
@@ -35,7 +33,6 @@ public class AdminEventController {
     }
 
     @GetMapping
-    @ResponseStatus(code = HttpStatus.OK)
     public List<EventFullDto> getEventsForAdmin(@RequestParam(required = false) List<Long> users,
                                                 @RequestParam(required = false) List<String> states,
                                                 @RequestParam(required = false) List<Long> categories,

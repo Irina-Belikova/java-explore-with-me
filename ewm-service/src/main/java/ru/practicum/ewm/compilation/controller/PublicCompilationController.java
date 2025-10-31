@@ -3,7 +3,6 @@ package ru.practicum.ewm.compilation.controller;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.compilation.dto.CompilationDto;
@@ -22,7 +21,6 @@ public class PublicCompilationController {
     private final ValidationUtil validation;
 
     @GetMapping("/{compId}")
-    @ResponseStatus(code = HttpStatus.OK)
     public CompilationDto getCompilationById(@PathVariable Long compId) {
         log.info("Запрос на получение подборки событий по его id -{}.", compId);
         validation.checkCompilationId(compId);
@@ -30,7 +28,6 @@ public class PublicCompilationController {
     }
 
     @GetMapping
-    @ResponseStatus(code = HttpStatus.OK)
     public List<CompilationDto> getCompilations(@RequestParam(required = false) Boolean pinned,
                                                 @RequestParam(defaultValue = "0")
                                                 @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,

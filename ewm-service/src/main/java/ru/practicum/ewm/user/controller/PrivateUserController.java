@@ -39,7 +39,6 @@ public class PrivateUserController {
     }
 
     @GetMapping("/events")
-    @ResponseStatus(code = HttpStatus.OK)
     public List<EventShortDto> getUserEvents(@PathVariable Long userId,
                                              @RequestParam(defaultValue = "0")
                                              @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,
@@ -51,7 +50,6 @@ public class PrivateUserController {
     }
 
     @GetMapping("/events/{eventId}")
-    @ResponseStatus(code = HttpStatus.OK)
     public EventFullDto getUserEventById(@PathVariable Long userId, @PathVariable Long eventId) {
         log.info("Поступил запрос от пользователя - {} на получение информации о его событии - {}.", userId, eventId);
         validation.validationGetUserEventById(userId, eventId);
@@ -59,7 +57,6 @@ public class PrivateUserController {
     }
 
     @PatchMapping("/events/{eventId}")
-    @ResponseStatus(code = HttpStatus.OK)
     public EventFullDto updateEventByInitiator(@PathVariable Long userId, @PathVariable Long eventId,
                                                @Valid @RequestBody UpdateEventUserRequest dto) {
         log.info("Запрос от пользователя - {} на изменение события - {}, {}", userId, eventId, dto);
@@ -76,7 +73,6 @@ public class PrivateUserController {
     }
 
     @PatchMapping("/requests/{requestId}/cancel")
-    @ResponseStatus(code = HttpStatus.OK)
     public ParticipationRequestDto deleteOwnRequest(@PathVariable Long userId, @PathVariable Long requestId) {
         log.info("Запрос от пользователя - {} на отмену своего участия в событии - {}.", userId, requestId);
         validation.validationDeleteOwnRequest(userId, requestId);
@@ -84,7 +80,6 @@ public class PrivateUserController {
     }
 
     @GetMapping("/requests")
-    @ResponseStatus(code = HttpStatus.OK)
     public List<ParticipationRequestDto> getOwnRequests(@PathVariable Long userId) {
         log.info("Запрос от пользователя - {} на получение списка событий, в которых он участвует.", userId);
         validation.checkUserId(userId);
@@ -92,7 +87,6 @@ public class PrivateUserController {
     }
 
     @GetMapping("/events/{eventId}/requests")
-    @ResponseStatus(code = HttpStatus.OK)
     public List<ParticipationRequestDto> getRequestsByEventId(@PathVariable Long userId, @PathVariable Long eventId) {
         log.info("Запрос от пользователя - {} на получения списка заявок на событие - {}.", userId, eventId);
         validation.validationGetUserEventById(userId, eventId);
@@ -100,7 +94,6 @@ public class PrivateUserController {
     }
 
     @PatchMapping("/events/{eventId}/requests")
-    @ResponseStatus(code = HttpStatus.OK)
     public EventRequestStatusUpdateResult updateRequestsByEventId(@PathVariable Long userId,
                                                                   @PathVariable Long eventId,
                                                                   @Valid @RequestBody EventRequestStatusUpdateRequest dto) {

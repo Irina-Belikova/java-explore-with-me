@@ -4,7 +4,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.category.dto.CategoryDto;
@@ -23,7 +22,6 @@ public class PublicCategoryController {
     private final ValidationUtil validation;
 
     @GetMapping
-    @ResponseStatus(code = HttpStatus.OK)
     public List<CategoryDto> getAllCategories(@RequestParam(defaultValue = "0")
                                               @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,
                                               @RequestParam(defaultValue = "10")
@@ -33,7 +31,6 @@ public class PublicCategoryController {
     }
 
     @GetMapping("/{catId}")
-    @ResponseStatus(code = HttpStatus.OK)
     public CategoryDto getCategoryById(@PathVariable
                                        @Positive(message = "Id категории должно быть положительным числом.") long catId) {
         log.info("Поступил запрос на получение данных категории по id - {}", catId);
