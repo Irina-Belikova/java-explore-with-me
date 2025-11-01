@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.practicum.ewm.utils.DateFormatterUtil;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 
 @RestControllerAdvice
 @Slf4j
@@ -22,5 +24,12 @@ public class ErrorHandler {
         exp.printStackTrace(pw);
         String stackTrace = sw.toString();
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, exp.getMessage(), stackTrace);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleBadParameterException(BadParameterException e) {
+        return new ApiError(HttpStatus.BAD_REQUEST.name(), "Запрос составлен некорректно.",
+                e.getMessage(), DateFormatterUtil.formatDateToString(LocalDateTime.now()));
     }
 }

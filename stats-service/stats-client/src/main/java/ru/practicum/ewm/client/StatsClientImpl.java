@@ -1,5 +1,6 @@
 package ru.practicum.ewm.client;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -12,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import ru.practicum.ewm.dto.StatsRequestDto;
 import ru.practicum.ewm.dto.StatsResponseDto;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
@@ -21,17 +23,28 @@ import java.util.List;
 public class StatsClientImpl implements StatsClient {
     private final RestTemplate rest;
     private final String serverUrl;
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final String application;
     private static final String HIT_ENDPOINT = "/hit";
     private static final String STATS_ENDPOINT = "/stats";
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public StatsClientImpl(@Value("${stats.server.url}") String serverUrl, RestTemplateBuilder restBuilder) {
+    public StatsClientImpl(@Value("${stats.server.url}") String serverUrl,
+                           @Value("${spring.application.name}") String application,
+                           RestTemplateBuilder restBuilder) {
         this.serverUrl = serverUrl;
+        this.application = application;
         this.rest = restBuilder.build();
     }
 
     @Override
-    public void saveHit(StatsRequestDto dto) {
+    public void saveHit(HttpServletRequest request) {
+        StatsRequestDto dto = StatsRequestDto.builder()
+                .app(application)
+                .ip(request.getRemoteAddr())
+                .uri(request.getRequestURI())
+                .timestamp(LocalDateTime.now().format(FORMATTER))
+                .build();
+
         try {
             UriComponentsBuilder uriBuilder = UriComponentsBuilder
                     .fromHttpUrl(serverUrl)

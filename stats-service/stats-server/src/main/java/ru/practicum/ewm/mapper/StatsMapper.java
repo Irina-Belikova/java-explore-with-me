@@ -14,6 +14,7 @@ import java.util.List;
 public interface StatsMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "timestamp", source = "timestamp", qualifiedByName = "parseStringToDate")
     Stats mapToStats(StatsRequestDto dto);
 
     default ParamDto mapToParamDto(String start, String end, List<String> uris, boolean unique) {
