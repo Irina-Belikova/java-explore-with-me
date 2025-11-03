@@ -273,7 +273,7 @@
 			"response": []
 		},
 		{
-			"name": "создание события-1",
+			"name": "создание события-107",
 			"event": [
 				{
 					"listen": "test",
@@ -318,7 +318,7 @@
 			"response": []
 		},
 		{
-			"name": "создание события-2",
+			"name": "создание события-108",
 			"event": [
 				{
 					"listen": "test",
@@ -363,7 +363,7 @@
 			"response": []
 		},
 		{
-			"name": "публикация админом события-1",
+			"name": "публикация админом события-107",
 			"event": [
 				{
 					"listen": "test",
@@ -398,21 +398,21 @@
 					"raw": "{\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}"
 				},
 				"url": {
-					"raw": "{{baseURL}}/admin/events/1",
+					"raw": "{{baseURL}}/admin/events/107",
 					"host": [
 						"{{baseURL}}"
 					],
 					"path": [
 						"admin",
 						"events",
-						"1"
+						"107"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "публикация админом события-2",
+			"name": "публикация админом события-108",
 			"event": [
 				{
 					"listen": "test",
@@ -447,21 +447,21 @@
 					"raw": "{\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}"
 				},
 				"url": {
-					"raw": "{{baseURL}}/admin/events/2",
+					"raw": "{{baseURL}}/admin/events/108",
 					"host": [
 						"{{baseURL}}"
 					],
 					"path": [
 						"admin",
 						"events",
-						"2"
+						"108"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "комментарий к event-1 от user-3",
+			"name": "комментарий к event-107 от user-3",
 			"event": [
 				{
 					"listen": "test",
@@ -492,7 +492,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseURL}}/users/3/comments?eventId=1",
+					"raw": "{{baseURL}}/users/3/comments?eventId=107",
 					"host": [
 						"{{baseURL}}"
 					],
@@ -504,7 +504,7 @@
 					"query": [
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
@@ -512,7 +512,7 @@
 			"response": []
 		},
 		{
-			"name": "комментарий к event-1 от user-4",
+			"name": "комментарий к event-107 от user-4",
 			"event": [
 				{
 					"listen": "test",
@@ -543,7 +543,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseURL}}/users/4/comments?eventId=1",
+					"raw": "{{baseURL}}/users/4/comments?eventId=107",
 					"host": [
 						"{{baseURL}}"
 					],
@@ -555,7 +555,7 @@
 					"query": [
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
@@ -748,7 +748,7 @@
 			"response": []
 		},
 		{
-			"name": "получение комментариев к event-1",
+			"name": "получение комментариев к event-107",
 			"event": [
 				{
 					"listen": "test",
@@ -776,7 +776,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseURL}}/users/5/events/1/comments",
+					"raw": "{{baseURL}}/users/5/events/107/comments",
 					"host": [
 						"{{baseURL}}"
 					],
@@ -784,7 +784,7 @@
 						"users",
 						"5",
 						"events",
-						"1",
+						"107",
 						"comments"
 					]
 				}
@@ -792,7 +792,7 @@
 			"response": []
 		},
 		{
-			"name": "получение комментариев к event-2",
+			"name": "получение комментариев к event-108",
 			"event": [
 				{
 					"listen": "test",
@@ -820,7 +820,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseURL}}/users/3/events/2/comments",
+					"raw": "{{baseURL}}/users/3/events/108/comments",
 					"host": [
 						"{{baseURL}}"
 					],
@@ -828,7 +828,7 @@
 						"users",
 						"3",
 						"events",
-						"2",
+						"108",
 						"comments"
 					]
 				}
