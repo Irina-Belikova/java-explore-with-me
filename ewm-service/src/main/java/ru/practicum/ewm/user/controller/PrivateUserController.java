@@ -12,9 +12,8 @@ import ru.practicum.ewm.event.dto.EventShortDto;
 import ru.practicum.ewm.event.dto.NewEventDto;
 import ru.practicum.ewm.event.dto.UpdateEventUserRequest;
 import ru.practicum.ewm.event.service.EventService;
-import ru.practicum.ewm.user.dto.EventRequestStatusUpdateRequest;
-import ru.practicum.ewm.user.dto.EventRequestStatusUpdateResult;
-import ru.practicum.ewm.user.dto.ParticipationRequestDto;
+import ru.practicum.ewm.user.dto.*;
+import ru.practicum.ewm.user.service.CommentService;
 import ru.practicum.ewm.user.service.RequestService;
 import ru.practicum.ewm.utils.ValidationUtil;
 
@@ -28,6 +27,7 @@ import java.util.List;
 public class PrivateUserController {
     private final EventService eventService;
     private final RequestService requestService;
+    private final CommentService commentService;
     private final ValidationUtil validation;
 
     @PostMapping("/events")
@@ -100,5 +100,63 @@ public class PrivateUserController {
         log.info("Запрос пользователя - {} на изменение статуса заявок на его событие - {}.", userId, eventId);
         validation.validationUpdateRequestsByEventId(userId, eventId, dto);
         return requestService.updateRequestsByEventId(eventId, dto);
+    }
+
+    @PostMapping("/comments")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public CommentShortResponse addComment(@PathVariable Long userId,
+                                           @RequestParam Long eventId, @Valid @RequestBody CommentDto dto) {
+        log.info("Запрос на создание комментария от пользователя - {}, на событие - {}", userId, eventId);
+        validation.validationAddComment(eventId);
+        return commentService.addComment(userId, eventId, dto);
+    }
+
+    @PostMapping("/comments/{commentId}/replies")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public ReplyCommentResponse replyToComment(@PathVariable Long userId, @PathVariable Long commentId,
+                                               @Valid @RequestBody CommentDto dto) {
+        log.info("Запрос на ответ на комментарий - {} от пользователя {}.", commentId, userId);
+        validation.checkCommentId(commentId);
+        return commentService.replyToComment(userId, commentId, dto);
+    }
+
+    @PatchMapping("/comments/{commentId}")
+    public CommentShortResponse updateComment(@PathVariable Long userId, @PathVariable Long commentId,
+                                              @Valid @RequestBody CommentDto dto) {
+        log.info("Запрос от пользователя - {} на изменение своего комментария - {}", userId, commentId);
+        validation.validationUpdateComment(userId, commentId);
+        return commentService.updateComment(commentId, dto);
+    }
+
+    @DeleteMapping("/comments/{commentId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteOwnComment(@PathVariable Long userId, @PathVariable Long commentId) {
+        log.info("Запрос от пользователя - {} на удаление своего комментария - {}.", userId, commentId);
+        validation.validationDeleteOwnComment(userId, commentId);
+        commentService.deleteOwnComment(commentId);
+    }
+
+    @GetMapping("/comments/{commentId}")
+    public List<ReplyCommentResponse> getReplyComments(@PathVariable Long userId, @PathVariable Long commentId,
+                                                       @RequestParam(defaultValue = "ASC") String sort,
+                                                       @RequestParam(defaultValue = "0")
+                                                       @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,
+                                                       @RequestParam(defaultValue = "10")
+                                                       @Min(value = 1, message = "Параметр 'size' должен быть не меньше 1") int size) {
+        log.info("Запрос на получение списка ответов на свой комментарий - {}", commentId);
+        validation.validationGetReplyComments(userId, commentId);
+        return commentService.getReplyComments(userId, commentId, sort, from, size);
+    }
+
+    @GetMapping("/events/{eventId}/comments")
+    public List<CommentFullResponse> getCommentsByEventId(@PathVariable Long userId, @PathVariable Long eventId,
+                                                          @RequestParam(defaultValue = "ASC") String sort,
+                                                          @RequestParam(defaultValue = "0")
+                                                          @Min(value = 0, message = "Параметр 'from' должен быть не меньше 0") int from,
+                                                          @RequestParam(defaultValue = "10")
+                                                          @Min(value = 1, message = "Параметр 'size' должен быть не меньше 1") int size) {
+        log.info("Получение списка комментариев к событию - {}", eventId);
+        validation.checkEventId(eventId);
+        return commentService.getCommentsByEventId(userId, eventId, sort, from, size);
     }
 }
