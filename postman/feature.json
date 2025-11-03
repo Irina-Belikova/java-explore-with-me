@@ -9,6 +9,17 @@
 	"item": [
 		{
 			"name": "⚠️ ОЧИСТКА БАЗЫ ДАННЫХ - комментарии",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Пропускаем тесты для очистки базы данных"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -27,6 +38,17 @@
 		},
 		{
 			"name": "⚠️ ОЧИСТКА БАЗЫ ДАННЫХ - события",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Пропускаем тесты для очистки базы данных"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -45,6 +67,17 @@
 		},
 		{
 			"name": "⚠️ ОЧИСТКА БАЗЫ ДАННЫХ - категории",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Пропускаем тесты для очистки базы данных"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -63,6 +96,17 @@
 		},
 		{
 			"name": "⚠️ ОЧИСТКА БАЗЫ ДАННЫХ - пользователи",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Пропускаем тесты для очистки базы данных"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
