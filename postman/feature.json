@@ -9,17 +9,6 @@
 	"item": [
 		{
 			"name": "⚠️ ОЧИСТКА БАЗЫ ДАННЫХ - комментарии",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// Пропускаем тесты для очистки базы данных"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -38,17 +27,6 @@
 		},
 		{
 			"name": "⚠️ ОЧИСТКА БАЗЫ ДАННЫХ - события",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// Пропускаем тесты для очистки базы данных"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -67,17 +45,6 @@
 		},
 		{
 			"name": "⚠️ ОЧИСТКА БАЗЫ ДАННЫХ - категории",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// Пропускаем тесты для очистки базы данных"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -96,17 +63,6 @@
 		},
 		{
 			"name": "⚠️ ОЧИСТКА БАЗЫ ДАННЫХ - пользователи",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// Пропускаем тесты для очистки базы данных"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -751,11 +707,14 @@
 				"packages": {},
 				"requests": {},
 				"exec": [
-					"pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
-					"    pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
-					"    pm.response.to.be.withBody; // ответ должен содержать тело\r",
-					"    pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
-					"});"
+					"// Пропускаем тесты для запросов очистки БД",
+					"if (!pm.request.name.includes('ОЧИСТКА БАЗЫ ДАННЫХ')) {",
+					"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+					"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+					"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+					"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+					"    });",
+					"}"
 				]
 			}
 		}
