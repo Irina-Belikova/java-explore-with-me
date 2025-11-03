@@ -11,3 +11,5 @@ Template repository for ExploreWithMe project.
 7. Пользователь может получить ответы на свой комментарий.
 8. Просматривать комментарии к событию могут только зарегистрированные пользователи.
 
+https://github.com/Irina-Belikova/java-explore-with-me/pull/3
+
