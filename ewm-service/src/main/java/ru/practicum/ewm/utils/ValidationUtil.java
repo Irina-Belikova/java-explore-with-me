@@ -18,8 +18,11 @@ import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.ValidationException;
 import ru.practicum.ewm.user.dto.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.user.dto.NewUserRequest;
+import ru.practicum.ewm.user.model.Comment;
+import ru.practicum.ewm.user.model.CommentStatus;
 import ru.practicum.ewm.user.model.Request;
 import ru.practicum.ewm.user.model.RequestStatus;
+import ru.practicum.ewm.user.repository.CommentRepository;
 import ru.practicum.ewm.user.repository.RequestRepository;
 import ru.practicum.ewm.user.repository.UserRepository;
 
@@ -34,6 +37,7 @@ public class ValidationUtil {
     private final EventRepository eventRepository;
     private final RequestRepository requestRepository;
     private final CompilationRepository compilationRepository;
+    private final CommentRepository commentRepository;
 
     public void validationForAddUser(NewUserRequest dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
@@ -227,5 +231,54 @@ public class ValidationUtil {
                 throw new BadParameterException("Дата окончания выборки должна быть после даты начала.");
             }
         }
+    }
+
+    public void validationAddComment(long eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new NotFoundException(String.format("События с таким id - %d не существует.", eventId)));
+
+        if (!event.getState().equals(StatusState.PUBLISHED)) {
+            throw new ValidationException("Нельзя оставить комментарий на неопубликованное событие.");
+        }
+    }
+
+    public void checkCommentId(long id) {
+        if (!commentRepository.existsById(id)) {
+            throw new NotFoundException(String.format("Комментария с таким id - %d не существует.", id));
+        }
+    }
+
+    public void validationUpdateComment(long authorId, long commentId) {
+        Comment comment = checkCommentAndAuthor(authorId, commentId, "Изменить можно только свой комментарий.");
+    }
+
+    public void validationDeleteOwnComment(long authorId, long commentId) {
+        Comment comment = checkCommentAndAuthor(authorId, commentId, "Удалить можно только свой комментарий.");
+        if (comment.getStatus().equals(CommentStatus.CANCELED)) {
+            throw new BadParameterException("Пользователь может удалить только опубликованный комментарий.");
+        }
+    }
+
+    public void validationGetReplyComments(long authorId, long commentId) {
+        Comment comment = checkCommentAndAuthor(authorId, commentId, "Получить ответы можно только на свой комментарий.");
+    }
+
+    public void validationCancelComment(long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new NotFoundException(String.format("Комментария с таким id - %d не существует.", commentId)));
+
+        if (comment.getStatus().equals(CommentStatus.CANCELED)) {
+            throw new BadParameterException("Комментарий уже и так скрыт.");
+        }
+    }
+
+    private Comment checkCommentAndAuthor(long authorId, long commentId, String message) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new NotFoundException(String.format("Комментария с таким id - %d не существует.", commentId)));
+
+        if (authorId != comment.getAuthor().getId()) {
+            throw new BadParameterException(message);
+        }
+        return comment;
     }
 }

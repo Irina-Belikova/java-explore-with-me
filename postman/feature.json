@@ -1,0 +1,869 @@
+{
+	"info": {
+		"_postman_id": "54f9ee4a-8397-4615-a38b-f2c5b8408669",
+		"name": "feature",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45179803",
+		"_collection_link": "https://irina-5601815.postman.co/workspace/Irina's-Workspace~9274bc7e-fc7a-42fd-802c-5e14d158ccff/collection/45179803-54f9ee4a-8397-4615-a38b-f2c5b8408669?action=share&source=collection_link&creator=45179803"
+	},
+	"item": [
+		{
+			"name": "создание пользователя-1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Максим\",\r\n    \"email\":\"maksim@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/admin/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание пользователя-2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Петя\",\r\n    \"email\":\"petya@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/admin/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание пользователя-3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Саша\",\r\n    \"email\":\"sasha@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/admin/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание пользователя-4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Света\",\r\n    \"email\":\"sveta@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/admin/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание пользователя-5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Олег\",\r\n    \"email\":\"oleg@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/admin/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание категории-1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"feed81\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/admin/categories",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"admin",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание события-107",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"annotation\":\"Vero tempora doloremque. Nobis et ad. Sunt iure doloremque consequatur beatae qui autem aut vero. Excepturi voluptatum pariatur.\",\"category\":1,\"description\":\"Perspiciatis qui corrupti et qui pariatur aperiam quaerat. Aut assumenda mollitia qui voluptates qui esse sit sunt. Et harum dolorem sed ex aut. Eaque ea voluptas deserunt fugit odit consequatur sunt laboriosam voluptas.\\n \\rQuo rerum eum quia consequatur quod. Rerum nam magnam ad quos eos totam eveniet ipsum. Odio et voluptate. Blanditiis qui quidem. Et corrupti velit in blanditiis voluptatum sint fugit reprehenderit.\\n \\rEa consectetur est rerum voluptatum quia eos eum quisquam. Accusantium voluptas perspiciatis. Quia totam sint. Voluptas qui quo molestias qui qui alias et voluptates. Quod distinctio alias quis. Mollitia blanditiis suscipit.\",\"eventDate\":\"2026-11-03 21:10:17\",\"location\":{\"lat\":40.4681,\"lon\":-45.4466},\"paid\":\"false\",\"participantLimit\":\"166\",\"requestModeration\":\"false\",\"title\":\"Voluptatem unde voluptatibus sequi exercitationem.\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/1/events",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"1",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание события-108",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"annotation\":\"Sed vero inventore soluta non et in distinctio sed. Et maiores dolorum aliquid possimus consequatur non. Fugit dicta nulla. Id ipsum quasi esse aperiam rem quos. Est corrupti magnam modi sequi similique mollitia accusantium. Non delectus et distinctio velit illo assumenda quasi architecto.\",\"category\":1,\"description\":\"Non exercitationem iste amet ullam iusto quidem iusto. Dolor blanditiis minus sapiente sequi quo. Neque veniam deserunt qui quam voluptas velit omnis. Sed aliquid porro et recusandae ea sapiente. Facere et qui ut eos deserunt quidem. Et nisi inventore rerum distinctio.\\n \\rCorporis ducimus quia nulla. Ullam assumenda sapiente. Eius ullam amet sed sequi. Dolores ipsum aut.\\n \\rMolestiae eveniet odio iste laboriosam eum. Aut consequatur dolore enim consequatur consequatur laboriosam iste aut voluptates. Facere eius nostrum ipsum velit voluptate neque facere provident qui. Dolore rem ipsum.\",\"eventDate\":\"2026-11-03 21:19:29\",\"location\":{\"lat\":-35.8537,\"lon\":-127.9921},\"paid\":\"false\",\"participantLimit\":\"162\",\"requestModeration\":\"true\",\"title\":\"Dolorum et magnam et.\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/2/events",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"2",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "публикация админом события-107",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/admin/events/107",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"admin",
+						"events",
+						"107"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "публикация админом события-108",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/admin/events/108",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"admin",
+						"events",
+						"108"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "комментарий к event-107 от user-3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comment\": \"комментарий-1 к event-1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/3/comments?eventId=107",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"3",
+						"comments"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "107"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "комментарий к event-107 от user-4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comment\": \"комментарий-2 к event-1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/4/comments?eventId=107",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"4",
+						"comments"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "107"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ответ на comment-1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comment\": \"ответ на комментарий-1 к event-1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/1/comments/1/replies",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"1",
+						"comments",
+						"1",
+						"replies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ответ на comment-2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comment\": \"ответ на комментарий-2 к event-1 от user-5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/5/comments/2/replies",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"5",
+						"comments",
+						"2",
+						"replies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ответ на comment-2 второй",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comment\": \"ответ на комментарий-2 к event-1 от user-3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/3/comments/2/replies",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"3",
+						"comments",
+						"2",
+						"replies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получить ответы на comment-2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/4/comments/2",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"4",
+						"comments",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получение комментариев к event-107",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Тело ответа должно быть массивом и количеством элементов 2\", () => {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
+							"    pm.expect(responseBody).to.have.lengthOf(2);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/users/5/events/107/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"5",
+						"events",
+						"107",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получение комментариев к event-108",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    pm.test(\"Ответ должен содержать код успеха и данные в формате json\", function() {\r",
+							"        pm.response.to.be.success; // код ответа должен быть равен 200 OK\r",
+							"        pm.response.to.be.withBody; // ответ должен содержать тело\r",
+							"        pm.response.to.be.json; // и тело ответа должно быть в формате JSON\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Тело ответа должно быть массивом и количеством элементов 0\", () => {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
+							"    pm.expect(responseBody).to.have.lengthOf(0);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/users/3/events/108/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"3",
+						"events",
+						"108",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080"
+		}
+	]
+}

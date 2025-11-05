@@ -7,8 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewm.user.dto.CommentAdminResponse;
 import ru.practicum.ewm.user.dto.NewUserRequest;
 import ru.practicum.ewm.user.dto.UserDto;
+import ru.practicum.ewm.user.service.CommentService;
 import ru.practicum.ewm.user.service.UserService;
 import ru.practicum.ewm.utils.ValidationUtil;
 
@@ -21,6 +23,7 @@ import java.util.List;
 @Slf4j
 public class AdminUserController {
     private final UserService userService;
+    private final CommentService commentService;
     private final ValidationUtil validation;
 
     @PostMapping
@@ -48,5 +51,12 @@ public class AdminUserController {
         log.info("Поступил запрос на получение списка пользователей - {} с отступом - {} и количеством элементов - {}",
                 ids, from, size);
         return userService.getUsers(ids, from, size);
+    }
+
+    @PatchMapping("/comment/{commentId}/cancel")
+    public CommentAdminResponse cancelComment(@PathVariable Long commentId) {
+        log.info("Запрос от администратора на скрытие комментария - {}.", commentId);
+        validation.validationCancelComment(commentId);
+        return commentService.cancelComment(commentId);
     }
 }
